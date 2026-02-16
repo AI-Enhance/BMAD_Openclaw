@@ -1,154 +1,128 @@
-# BMad Workflow Cycle
+# BMad Method Workflow Cycle
 
-## Complete Implementation Cycle
+This documents the complete BMad Method workflow cycle as defined in the official repository, with OpenClaw execution notes.
+
+## Phase 1: Analysis (Analyst Agent — Mary 📊)
+
+**Goal:** Understand the problem space, research the market, and create an executive product brief.
+
+### Workflows
+
+1. **Brainstorm Project (BP)** — Expert guided facilitation through brainstorming techniques with a final report
+2. **Market Research (MR)** — Market analysis, competitive landscape, customer needs and trends
+3. **Domain Research (DR)** — Industry domain deep dive, subject matter expertise and terminology
+4. **Technical Research (TR)** — Technical feasibility, architecture options and implementation approaches
+5. **Create Product Brief (CB)** — Guided experience to nail down your product idea into an executive brief
+6. **Document Project (DP)** — Analyze an existing project to produce useful documentation (also available via Tech Writer)
+
+### Output Artifacts
+- Research reports (market, domain, technical)
+- Product Brief
+- Brainstorming report
+
+> **OpenClaw:** Spawn `bmad-analyst` and use trigger codes (BP, MR, DR, TR, CB, DP).
+
+---
+
+## Phase 2: Planning (PM Agent — John 📋 + UX Designer — Sally 🎨)
+
+**Goal:** Transform the product brief into detailed requirements and UX specifications.
+
+### Workflows
+
+1. **Create PRD (CP)** — Expert led facilitation to produce your Product Requirements Document
+2. **Validate PRD (VP)** — Validate PRD is comprehensive, lean, well organized and cohesive
+3. **Edit PRD (EP)** — Update an existing Product Requirements Document
+4. **Create UX Design (CU)** — Guided UX design specification for architecture and implementation
+5. **Create Epics and Stories (CE)** — Create the Epics and Stories listing that drives development
+
+### Output Artifacts
+- Product Requirements Document (PRD)
+- UX Design Specification
+- Epics and Stories document
+
+> **OpenClaw:** Spawn `bmad-pm` for PRD/Epics work, `bmad-ux` for UX design.
+
+---
+
+## Phase 3: Solutioning (Architect — Winston 🏗️ + PM — John 📋)
+
+**Goal:** Define technical architecture and validate implementation readiness.
+
+### Workflows
+
+1. **Create Architecture (CA)** — Guided workflow to document technical decisions
+2. **Implementation Readiness (IR)** — Ensure PRD, UX, Architecture and Epics/Stories are all aligned
+
+### Output Artifacts
+- Architecture Decision Document
+- Implementation Readiness Report
+
+> **OpenClaw:** Spawn `bmad-architect` for architecture, either agent for readiness check.
+
+---
+
+## Phase 4: Implementation (SM — Bob 🏃 + Dev — Amelia 💻 + QA — Quinn 🧪)
+
+**Goal:** Execute the plan through agile sprint cycles.
+
+### Workflows
+
+1. **Sprint Planning (SP)** — Generate sprint-status.yaml tracking file from epics
+2. **Create Story (CS)** — Prepare a story with comprehensive context for the developer agent
+3. **Dev Story (DS)** — Implement a story's tasks/subtasks with TDD, updating the story file
+4. **Code Review (CR)** — Adversarial review finding 3-10 specific issues per story
+5. **Sprint Status** — Summarize sprint progress and recommend next workflow
+6. **Epic Retrospective (ER)** — Party Mode review of completed epic with all agents
+7. **Course Correction (CC)** — Navigate significant mid-sprint changes
+8. **QA Automate (QA)** — Generate tests for existing features
+
+### Implementation Cycle
 
 ```
-Epic Start
-    │
-    ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    FOR EACH STORY                            │
-│                                                              │
-│   ┌─────────────┐                                           │
-│   │create-story │ → Creates story.md, updates sprint-status │
-│   │             │   First story also sets epic: in-progress │
-│   └─────┬───────┘                                           │
-│         │                                                    │
-│         ▼                                                    │
-│   ┌─────────────┐                                           │
-│   │ dev-story   │ → Implements code (red-green-refactor)    │
-│   │             │   Updates story status: in-progress→review│
-│   └─────┬───────┘                                           │
-│         │                                                    │
-│         ▼                                                    │
-│   ┌─────────────┐                                           │
-│   │ code-review │ → Reviews implementation                  │
-│   │             │   APPROVED → status: done                 │
-│   │             │   CHANGES REQUESTED → status: in-progress │
-│   └─────┬───────┘                                           │
-│         │                                                    │
-│         ▼                                                    │
-│   ┌─────────────┐                                           │
-│   │  (if fixes  │ → dev-story again with review follow-ups  │
-│   │   needed)   │   Then back to code-review                │
-│   └─────────────┘                                           │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
-    │
-    ▼ (when all stories done)
-┌─────────────────┐
-│  retrospective  │ → Reviews epic, extracts learnings
-│                 │   Updates epic-X-retrospective: done
-└─────────────────┘
-    │
-    ▼
-Next Epic (or project complete)
+Sprint Planning (SP) → Create Story (CS) → Dev Story (DS) → Code Review (CR) → [next story or Retrospective (ER)]
 ```
 
-## Status Transitions
+### Status State Machine
 
-### Epic Status
+**Epic:** `backlog` → `in-progress` → `done`
+**Story:** `backlog` → `ready-for-dev` → `in-progress` → `review` → `done`
+**Retrospective:** `optional` ↔ `done`
+
+> **OpenClaw:** Spawn `bmad-sm` for planning/stories, `bmad-dev` for implementation/review, `bmad-qa` for test generation.
+
+---
+
+## Quick Flow (Solo Dev — Barry 🚀)
+
+**Goal:** Rapid spec-to-implementation for smaller features with minimum ceremony.
+
+### Workflows
+
+1. **Quick Spec (QS)** — Conversational spec engineering producing implementation-ready tech specs
+2. **Quick Dev (QD)** — Implement tech spec or direct instructions end-to-end
+3. **Code Review (CR)** — Same adversarial review as Phase 4
+
+### Quick Flow Cycle
+
 ```
-backlog → in-progress → done
-         (first story)  (all stories done)
-```
-
-### Story Status
-```
-backlog → ready-for-dev → in-progress → review → done
-          (create-story)   (dev-story)   (dev)    (code-review APPROVED)
-                                 │                      │
-                                 └──────────────────────┘
-                                 (code-review CHANGES REQUESTED)
-```
-
-## Files Modified by Each Workflow
-
-### create-story
-**Creates:**
-- `{implementation_artifacts}/{story_key}.md`
-
-**Updates:**
-- `sprint-status.yaml`:
-  - Story: `backlog` → `ready-for-dev`
-  - Epic (if first story): `backlog` → `in-progress`
-
-### dev-story
-**Updates:**
-- Story file:
-  - Status: `ready-for-dev` → `in-progress` → `review`
-  - Tasks/Subtasks checkboxes: `[ ]` → `[x]`
-  - Dev Agent Record (model, debug log, completion notes)
-  - File List table
-  - Change Log
-- `sprint-status.yaml`:
-  - Story: `ready-for-dev` → `in-progress` → `review`
-
-### code-review
-**Updates:**
-- Story file:
-  - Adds "Senior Developer Review (AI)" section
-  - If CHANGES REQUESTED: Adds "Review Follow-ups (AI)" subsection
-  - Status: `review` → `done` OR `review` → `in-progress`
-  - Change Log
-- `sprint-status.yaml`:
-  - Story: `review` → `done` OR `review` → `in-progress`
-
-### retrospective
-**Creates:**
-- `{implementation_artifacts}/epic-{N}-retrospective.md`
-
-**Updates:**
-- `sprint-status.yaml`:
-  - `epic-{N}-retrospective`: `optional` → `done`
-
-## Orchestrator Decision Tree
-
-### When user says "next story" or "continue":
-
-```python
-def decide_next_action():
-    status = read_sprint_status()
-    
-    # Check for stories needing review follow-up
-    for story in stories_in_progress:
-        if has_review_followups(story):
-            return spawn_dev_story(story)  # Resume with follow-ups
-    
-    # Check for stories ready for review
-    for story in stories_in_review:
-        return spawn_code_review(story)
-    
-    # Check for stories ready for dev
-    for story in stories_ready_for_dev:
-        return spawn_dev_story(story)
-    
-    # Check for stories in backlog
-    for story in stories_in_backlog:
-        return spawn_create_story(story)
-    
-    # Check if epic complete
-    if all_stories_done(current_epic):
-        if not retrospective_done(current_epic):
-            return spawn_retrospective(current_epic)
-        else:
-            return "Epic complete. Ready for next epic."
-    
-    return "All stories complete."
+Quick Spec (QS) → Quick Dev (QD) → Code Review (CR)
 ```
 
-### When spawning each agent:
+> **OpenClaw:** Spawn `bmad-quick-flow` for the complete quick flow cycle.
 
-1. **create-story**: Include epics.md context, architecture.md, previous story learnings
-2. **dev-story**: Include full story file, project-context.md, previous stories for patterns
-3. **code-review**: Include story file, git status, actual code files to review
-4. **retrospective**: Include all completed story files, architecture, learnings
+---
 
-## Critical Rules
+## Cross-Cutting Capabilities
 
-1. **Never skip create-story** — every story needs a story file before dev
-2. **Always run code-review** — never mark done without review
-3. **Preserve sprint-status structure** — keep all comments, STATUS DEFINITIONS
-4. **Handle review follow-ups** — dev-story must check for and prioritize [AI-Review] tasks
-5. **Update epic status** — first story in epic triggers `in-progress`
-6. **Run retrospective** — required before starting next epic
+### Advanced Elicitation
+Available at any template-output checkpoint — deeper exploration of a topic using structured techniques.
+
+### Party Mode
+Multi-agent discussion simulation available at template-output checkpoints. Agents debate and collaborate on the current topic.
+
+### Document Sharding
+Large documents can be split into smaller files with an index.md for manageable loading.
+
+### Project Context
+A project-context.md file provides coding standards and project-wide patterns to all agents.
