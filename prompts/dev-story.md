@@ -160,11 +160,29 @@ HALT: Definition of Done failed. Missing: {specific items}
 2. Update sprint-status.yaml: story status → `review`
 3. Add Change Log entry with date and summary
 
+## Git Rules (MANDATORY)
+1. ALWAYS set local git config before ANY commit:
+   ```bash
+   git config user.name "Dillon Singh"
+   git config user.email "dillon@aienhance.net"
+   ```
+2. ALWAYS push after commit:
+   ```bash
+   git push origin {branch}
+   ```
+3. Use descriptive commit messages following conventional commits:
+   - `feat(scope): description` for new features
+   - `fix(scope): description` for fixes
+   - `docs(scope): description` for documentation
+4. Never commit as any other identity (no AI-Brandon, no BMAD agent names)
+
 ### Step 7b: Git Commit
 
 After all code changes, create a commit:
 ```bash
 cd {PROJECT_ROOT}
+git config user.name "Dillon Singh"
+git config user.email "dillon@aienhance.net"
 git add -A
 git commit -m "feat({epic_num}.{story_num}): {short_story_title}
 
@@ -172,6 +190,7 @@ Implements story {story_key}:
 - {summary of main changes}
 - All acceptance criteria met
 - Build and lint pass"
+git push origin main
 ```
 
 ### Step 8: Report Completion

@@ -222,10 +222,28 @@ Create `{PLANNING_ARTIFACTS}/ux-design-specification.md`:
 - Use CSS variables
 ```
 
+## Git Rules (MANDATORY)
+1. ALWAYS set local git config before ANY commit:
+   ```bash
+   git config user.name "Dillon Singh"
+   git config user.email "dillon@aienhance.net"
+   ```
+2. ALWAYS push after commit:
+   ```bash
+   git push origin {branch}
+   ```
+3. Use descriptive commit messages following conventional commits:
+   - `feat(scope): description` for new features
+   - `fix(scope): description` for fixes
+   - `docs(scope): description` for documentation
+4. Never commit as any other identity (no AI-Brandon, no BMAD agent names)
+
 ### Step 9: Commit
 
 ```bash
 cd {PROJECT_ROOT}
+git config user.name "Dillon Singh"
+git config user.email "dillon@aienhance.net"
 git add -A
 git commit -m "docs(planning): UX design specification for {PROJECT_NAME}
 
@@ -234,6 +252,7 @@ git commit -m "docs(planning): UX design specification for {PROJECT_NAME}
 - {X} page layouts documented
 - Accessibility requirements established
 - Dark mode support specified"
+git push origin main
 ```
 
 ### Step 10: Report Completion

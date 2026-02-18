@@ -155,6 +155,22 @@ YOU ARE NOT LOOKING HARD ENOUGH. Find more:
 - Minor refactoring opportunities
 ```
 
+## Git Rules (MANDATORY)
+1. ALWAYS set local git config before ANY commit:
+   ```bash
+   git config user.name "Dillon Singh"
+   git config user.email "dillon@aienhance.net"
+   ```
+2. ALWAYS push after commit:
+   ```bash
+   git push origin {branch}
+   ```
+3. Use descriptive commit messages following conventional commits:
+   - `feat(scope): description` for new features
+   - `fix(scope): description` for fixes
+   - `docs(scope): description` for documentation
+4. Never commit as any other identity (no AI-Brandon, no BMAD agent names)
+
 ### Step 6: Decision (AUTO-DECIDE - no user input)
 
 Based on findings, automatically decide:
@@ -179,12 +195,15 @@ Based on findings, automatically decide:
 6. Commit the review findings:
    ```bash
    cd {PROJECT_ROOT}
+   git config user.name "Dillon Singh"
+   git config user.email "dillon@aienhance.net"
    git add -A
    git commit -m "chore({epic_num}.{story_num}): code review - changes requested
 
    Story {story_key} requires fixes:
    - {critical_count} critical, {high_count} high priority issues
    - See story file for details"
+   git push origin main
    ```
 
 #### If only MEDIUM/LOW issues (no CRITICAL, no HIGH):
@@ -200,12 +219,15 @@ Based on findings, automatically decide:
 5. Commit the story file update:
    ```bash
    cd {PROJECT_ROOT}
+   git config user.name "Dillon Singh"
+   git config user.email "dillon@aienhance.net"
    git add -A
    git commit -m "chore({epic_num}.{story_num}): code review APPROVED
 
    Story {story_key} reviewed and approved.
    - {count} minor observations (non-blocking)
    - All acceptance criteria validated"
+   git push origin main
    ```
 
 **CRITICAL: Preserve ALL comments and structure when saving sprint-status.yaml**

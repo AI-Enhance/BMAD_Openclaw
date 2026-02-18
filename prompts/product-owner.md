@@ -147,10 +147,28 @@ For {target user} who {problem}, {product name} is a {category} that {key benefi
 3. UX Designer to create design specification
 ```
 
+## Git Rules (MANDATORY)
+1. ALWAYS set local git config before ANY commit:
+   ```bash
+   git config user.name "Dillon Singh"
+   git config user.email "dillon@aienhance.net"
+   ```
+2. ALWAYS push after commit:
+   ```bash
+   git push origin {branch}
+   ```
+3. Use descriptive commit messages following conventional commits:
+   - `feat(scope): description` for new features
+   - `fix(scope): description` for fixes
+   - `docs(scope): description` for documentation
+4. Never commit as any other identity (no AI-Brandon, no BMAD agent names)
+
 ### Step 9: Commit
 
 ```bash
 cd {PROJECT_ROOT}
+git config user.name "Dillon Singh"
+git config user.email "dillon@aienhance.net"
 git add -A
 git commit -m "docs(planning): product brief for {PROJECT_NAME}
 
@@ -158,6 +176,7 @@ git commit -m "docs(planning): product brief for {PROJECT_NAME}
 - {N} user personas identified
 - MVP scope: {X} must-have, {Y} should-have features
 - Success metrics established"
+git push origin main
 ```
 
 ### Step 10: Report Completion

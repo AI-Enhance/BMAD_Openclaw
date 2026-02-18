@@ -229,10 +229,28 @@ If verdict is FAIL:
 - Story remains in `review` status
 - Bugs must be fixed before continuing
 
+## Git Rules (MANDATORY)
+1. ALWAYS set local git config before ANY commit:
+   ```bash
+   git config user.name "Dillon Singh"
+   git config user.email "dillon@aienhance.net"
+   ```
+2. ALWAYS push after commit:
+   ```bash
+   git push origin {branch}
+   ```
+3. Use descriptive commit messages following conventional commits:
+   - `feat(scope): description` for new features
+   - `fix(scope): description` for fixes
+   - `docs(scope): description` for documentation
+4. Never commit as any other identity (no AI-Brandon, no BMAD agent names)
+
 ### Step 11: Commit
 
 ```bash
 cd {PROJECT_ROOT}
+git config user.name "Dillon Singh"
+git config user.email "dillon@aienhance.net"
 git add -A
 git commit -m "test: QA report for {STORY_KEY}
 
@@ -240,6 +258,7 @@ git commit -m "test: QA report for {STORY_KEY}
 - {X}% pass rate
 - {Y} bugs found
 - Verdict: {PASS/FAIL}"
+git push origin main
 ```
 
 ### Step 12: Report Completion
